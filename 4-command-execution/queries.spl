@@ -1,0 +1,33 @@
+# =========================================
+# Suspicious Command Execution Detection
+# =========================================
+
+# 1. Suspicious Command Activity
+# Detect usage of potentially dangerous commands
+index=main (curl OR wget OR nc OR bash OR chmod)
+
+
+# 2. Command Activity by Host
+# Identify which system is executing suspicious commands
+index=main (curl OR wget OR nc OR bash OR chmod)
+| stats count by host
+| sort - count
+
+
+# 3. Command Activity Over Time (Spike Detection)
+# Detect sudden increase in suspicious command execution
+index=main (curl OR wget OR nc OR bash OR chmod)
+| timechart span=1m count
+
+
+# 4. Specific High-Risk Commands
+# Focus on more dangerous behaviors
+index=main (nc OR bash OR "chmod 777")
+
+
+# 5. Suspicious Activity Threshold
+# Highlight systems with excessive activity
+index=main (curl OR wget OR nc OR bash OR chmod)
+| stats count by host
+| where count > 10
+| sort - count
