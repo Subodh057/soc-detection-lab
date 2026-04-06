@@ -1,0 +1,38 @@
+# ===============================
+# Privilege Escalation Detection
+# ===============================
+
+# 1. Sudo Usage Overview
+# Shows how many times each user uses sudo
+index=main sudo
+| rex "sudo: (?<user>\S+)"
+| stats count by user
+| sort - count
+
+
+# 2. Failed Sudo Attempts (Privilege Escalation Failure)
+# Detects users trying to gain admin access but failing
+index=main ("not in sudoers" OR "authentication failure")
+
+
+# 3. Sudo Activity Over Time (Spike Detection)
+# Detects sudden increase in sudo usage
+index=main sudo
+| timechart span=1m count
+
+
+# 4. Commands Executed via Sudo
+# Shows what commands are being run with elevated privileges
+index=main sudo
+| rex "COMMAND=(?<command>.+)"
+| stats count by command
+| sort - count
+
+
+# 5. Suspicious Users (High Sudo Usage)
+# Flags users using sudo excessively
+index=main sudo
+| rex "sudo: (?<user>\S+)"
+| stats count by user
+| where count > 5
+| sort - count
