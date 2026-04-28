@@ -21,6 +21,17 @@ This project monitors system activity to identify suspicious commands that may i
 - Detect spikes in command activity
 
 ---
+## MITRE ATT&CK Mapping
+
+* Tactic: Execution (TA0002)
+    * Technique: Command and Scripting Interpreter (T1059)
+* Tactic: Command and Control (TA0011)
+    * Technique: Application Layer Protocol (T1071)
+* Tactic: Persistence / Defense Evasion (context-dependent)
+    * Technique: Modify File Permissions (T1222)
+
+Explanation:
+The observed commands align with T1059, where attackers use shell commands for execution, and T1071, where tools like curl or nc enable communication with external systems.
 
 ## Sample Detection Query
 ```spl
