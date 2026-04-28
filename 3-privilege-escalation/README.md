@@ -22,6 +22,12 @@ This project analyzes system authentication logs to identify suspicious privileg
 - Track sudo usage over time
 
 ---
+## MITRE ATT&CK Mapping
+
+* Tactic: Privilege Escalation (TA0004)
+* Technique: Abuse Elevation Control Mechanism (T1548)
+* Tactic: Defense Evasion (TA0005) (optional context)
+* Technique: Valid Accounts (T1078) (if legitimate account misuse)
 
 ## Sample Detection Query
 ```spl
